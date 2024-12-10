@@ -36,7 +36,9 @@ public class LitOnFire {
                 getState(event).getValue(BlockStateProperties.LIT)
                 && event.getItemStack().is(TORCHES)) {
             event.getEntity().swing(InteractionHand.MAIN_HAND);
-            getState(event).setValue(BlockStateProperties.LIT, true);
+            event.getLevel().setBlockAndUpdate(event.getPos(),
+                    getState(event).setValue(BlockStateProperties.LIT, true));
+
         }
     }
 
