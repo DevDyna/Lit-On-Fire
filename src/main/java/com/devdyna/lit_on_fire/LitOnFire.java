@@ -16,7 +16,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.IEventBus;
@@ -35,8 +34,8 @@ public class LitOnFire {
     public static final TagKey<Item> ITEM_TORCHES = TagKey.create(BuiltInRegistries.ITEM.key(),
             ResourceLocation.fromNamespaceAndPath(MODID, "can_lit_campfire"));
 
-    public static final TagKey<Block> BLOCK_TORCHES = TagKey.create(BuiltInRegistries.BLOCK.key(),
-            ResourceLocation.fromNamespaceAndPath(MODID, "can_lit_campfire"));
+    // public static final TagKey<Block> BLOCK_TORCHES = TagKey.create(BuiltInRegistries.BLOCK.key(),
+    //         ResourceLocation.fromNamespaceAndPath(MODID, "can_lit_campfire"));
 
     public LitOnFire(IEventBus modEventBus, ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(this);
