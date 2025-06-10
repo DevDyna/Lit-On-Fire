@@ -1,78 +1,57 @@
-// package com.devdyna.lit_on_fire;
+package com.devdyna.lit_on_fire;
 
-// import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-// public class Config {
-//     private static final ModConfigSpec.Builder B = new ModConfigSpec.Builder();
+public class Config {
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-//     // ---------------------------------------------------------------//
-//     // tooltip
-//     public static final ModConfigSpec.BooleanValue T_BOOL_GLOB = B
-//             .comment("Enable/Disable any tooltips")
-//             .define("Status", true);
+    // ---------------------------------------------------------------//
 
-//     public static final ModConfigSpec.BooleanValue T_ON = B
-//             .comment("Enable/Disable tooltip on campfire successful actived")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue CONSUME_ITEM = BUILDER
+            .comment("Items can be consumed on activation")
+            .define("item_consume", false);
 
-//     public static final ModConfigSpec.BooleanValue T_OFF = B
-//             .comment("Enable/Disable tooltip on campfire failed to active")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue IS_WATERLOGGED = BUILDER
+            .comment("Enable checking waterlog property to lit")
+            .define("check_waterlogging", true);
 
-//     // ---------------------------------------------------------------//
-//     // activation chance
-//     public static final ModConfigSpec.BooleanValue A_BOOL = B
-//             .comment("Enable/Disable random chance on campfire activation")
-//             .define("Random Activation", false);
+    public static final ModConfigSpec.BooleanValue SWING = BUILDER
+            .comment("Enable item swing animation")
+            .define("swing", true);
 
-//     public static final ModConfigSpec.IntValue A_CHANCE = B
-//             .comment("⚠ Only work when Random Activation still enable ⚠")
-//             .comment("Chance of success on clicking")
-//             .defineInRange("Chance", 50, 1, 100);
+    public static final ModConfigSpec.BooleanValue PARTICLES_ON = BUILDER
+            .comment("Enable particles on activation ")
+            .define("particles_activation", true);
 
-//     public static final ModConfigSpec.BooleanValue A_INVERT = B
-//             .comment("⚠ Only work when Random Activation still enable ⚠")
-//             .comment("Invert the chance of success on clicking")
-//             .define("Invert Chance", false);
+    public static final ModConfigSpec.BooleanValue SOUND_ON = BUILDER
+            .comment("Enable sounds on activation")
+            .define("sound_activation", true);
 
-//     // ---------------------------------------------------------------//
-//     // sound
-//     public static final ModConfigSpec.BooleanValue S_BOOL_GLOB = B
-//             .comment("Enable/Disable sound effects")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue ACTIONBAR_ON = BUILDER
+            .comment("Enable actionbar tooltip on activation")
+            .define("actionbar_activation", true);
 
-//     public static final ModConfigSpec.BooleanValue S_BOOL_ON = B
-//             .comment("Enable/Disable sound effects on campfire activation")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue CHANCE_TO_LIT = BUILDER
+            .comment("Enable chance on activation")
+            .define("chance_to_lit", true);
 
-//     public static final ModConfigSpec.BooleanValue S_BOOL_OFF = B
-//             .comment("Enable/Disable sound effects on campfire failed to active")
-//             .define("Status", true);
+    public static final ModConfigSpec.IntValue CHANCE_TO_LIT_VALUE = BUILDER
+            .comment("Chance of success 1/X")
+            .defineInRange("chance_to_lit_value", 50, 1, 100);
 
-//     // ---------------------------------------------------------------//
-//     // particles
-//     public static final ModConfigSpec.BooleanValue P_BOOL_GLOB = B
-//             .comment("Enable/Disable particles effects")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue CHANCE_FAIL = BUILDER
+            .comment("Enable chance fail sound")
+            .define("chance_to_lit_fail", true);
 
-//     public static final ModConfigSpec.BooleanValue P_BOOL_ON = B
-//             .comment("Enable/Disable particles effects on campfire activation")
-//             .define("Status", true);
+    public static final ModConfigSpec.BooleanValue INVALID_SOUND = BUILDER
+            .comment("Enable sound on invalid placement")
+            .define("invalid_sound", true);
 
-//     public static final ModConfigSpec.BooleanValue P_BOOL_OFF = B
-//             .comment("Enable/Disable particles effects on campfire failed to active")
-//             .define("Status", false);
-//     // ---------------------------------------------------------------//
-//     // item action
-//     public static final ModConfigSpec.BooleanValue I_GLOB = B
-//             .comment("Enable/Disable item required to active campfires")
-//             .define("Status", true);
-//     // ---------------------------------------------------------------//
-//     // player animation
-//     public static final ModConfigSpec.BooleanValue C_GLOB = B
-//             .comment("Enable/Disable player swing")
-//             .define("Status", true);
-//     // ---------------------------------------------------------------//
+    public static final ModConfigSpec.BooleanValue INVALID_TIP = BUILDER
+            .comment("Enable action bar on invalid placement")
+            .define("invalid_actionbar", true);
 
-//     static final ModConfigSpec ZCK = B.build();
-// }
+    // ---------------------------------------------------------------//
+
+    static final ModConfigSpec CONFIG_SPEC = BUILDER.build();
+}
