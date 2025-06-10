@@ -6,19 +6,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 public class LevelUtil {
     public static boolean isDimension(Level level, ResourceKey<Level> dim) {
@@ -38,6 +32,7 @@ public class LevelUtil {
         return value;
     }
 
+    @SuppressWarnings("deprecation")
     public static List<Holder<Block>> ResourceByTag(TagKey<Block> tag) {
         return BuiltInRegistries.BLOCK.getOrCreateTag(tag).stream().toList();
     }
@@ -75,14 +70,16 @@ public class LevelUtil {
      * @param resourcelocation "blocks/stone"
      * @return
      */
-    public static List<ItemStack> getItemStackFromLootTable(ServerLevel level, String ModName,
-            String resourcelocation) {
-        LootTable lootTable = level.getServer().reloadableRegistries()
-                .getLootTable(ResourceKey
-                        .create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(
-                                ModName, resourcelocation)));
-        return lootTable.getRandomItems(new LootParams.Builder(level).create(LootContextParamSets.EMPTY));
-    }
+    // public static List<ItemStack> getItemStackFromLootTable(ServerLevel level,
+    // String ModName,
+    // String resourcelocation) {
+    // LootTable lootTable = level.getServer().reloadableRegistries()
+    // .getLootTable(ResourceKey
+    // .create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(
+    // ModName, resourcelocation)));
+    // return lootTable.getRandomItems(new
+    // LootParams.Builder(level).create(LootContextParamSets.EMPTY));
+    // }
 
     /**
      * @return a value [0 , max] inclusive
@@ -105,18 +102,20 @@ public class LevelUtil {
         return d[l.random.nextInt(d.length)];
     }
 
-    public static boolean checkBlockPoses(Level l, BlockPos[] p1,Block b){
-        for(BlockPos p2 : p1){
-            if(!l.getBlockState(p2).is(b))
-            return false;
+    public static boolean checkBlockPoses(Level l, BlockPos[] p1, Block... b) {
+        for (BlockPos p2 : p1) {
+            for (Block block : b) {
+                if (!l.getBlockState(p2).is(block))
+                    return false;
+            }
         }
         return true;
     }
 
-    public static boolean checkBlockPoses(Level l, BlockPos[] p1,TagKey<Block> b){
-        for(BlockPos p2 : p1){
-            if(!l.getBlockState(p2).is(b))
-            return false;
+    public static boolean checkBlockPoses(Level l, BlockPos[] p1, TagKey<Block> b) {
+        for (BlockPos p2 : p1) {
+            if (!l.getBlockState(p2).is(b))
+                return false;
         }
         return true;
     }

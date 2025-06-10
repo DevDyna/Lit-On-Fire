@@ -10,10 +10,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClickEvent {
 
@@ -52,7 +53,7 @@ public class ClickEvent {
             // if (Config.C_GLOB.get())
             player.swing(InteractionHand.MAIN_HAND);
 
-            if (LevelUtil.checkBlockPoses(level, checkpos, BlockTags.AIR)) {
+            if (LevelUtil.checkBlockPoses(level, checkpos, Blocks.AIR, Blocks.CAVE_AIR, Blocks.VOID_AIR)) {
 
                 // if (Config.A_BOOL.get()) {
                 // if (LevelUtil.chance(
@@ -88,7 +89,7 @@ public class ClickEvent {
 
                 // if (Config.S_BOOL_GLOB.get() && Config.S_BOOL_OFF.get())
                 level.playLocalSound(pos.getX(), pos.getY(),
-                        pos.getZ(), SoundEvents.VAULT_INSERT_ITEM_FAIL, SoundSource.AMBIENT, 100,
+                        pos.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 100,
                         0.75f, true);
 
                 // if (Config.T_BOOL_GLOB.get() && Config.T_ON.get())
