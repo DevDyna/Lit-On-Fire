@@ -1,5 +1,6 @@
 package com.devdyna.lit_on_fire;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.core.Direction;
@@ -62,25 +63,6 @@ public class LevelUtil {
         popItemFromPos((Level) level, x, y, z, itemStack);
     }
 
-    // example
-    /**
-     * 
-     * @param level
-     * @param ModName          "minecraft"
-     * @param resourcelocation "blocks/stone"
-     * @return
-     */
-    // public static List<ItemStack> getItemStackFromLootTable(ServerLevel level,
-    // String ModName,
-    // String resourcelocation) {
-    // LootTable lootTable = level.getServer().reloadableRegistries()
-    // .getLootTable(ResourceKey
-    // .create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(
-    // ModName, resourcelocation)));
-    // return lootTable.getRandomItems(new
-    // LootParams.Builder(level).create(LootContextParamSets.EMPTY));
-    // }
-
     /**
      * @return a value [0 , max] inclusive
      */
@@ -102,12 +84,12 @@ public class LevelUtil {
         return d[l.random.nextInt(d.length)];
     }
 
-    public static boolean checkBlockPoses(Level l, BlockPos[] p1, Block... b) {
+    public static boolean checkBlockPoses(Level l, BlockPos[] p1, Block... blocks) {
         for (BlockPos p2 : p1) {
-            for (Block block : b) {
-                if (!l.getBlockState(p2).is(block))
-                    return false;
-            }
+
+            if (!Arrays.asList(blocks).contains(l.getBlockState(p2).getBlock()))
+                return false;
+
         }
         return true;
     }
