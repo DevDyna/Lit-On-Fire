@@ -4,9 +4,14 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
+@SuppressWarnings("deprecation")
 public class Tags {
-    @SuppressWarnings("deprecation")
-    public static final TagKey<Item> ITEM_TORCHES = TagKey.create(BuiltInRegistries.ITEM.key(),
-            new ResourceLocation(Main.MODID, "can_lit_campfire"));
+
+    public static final TagKey<Item> CAN_LIT_BLOCKS = TagKey.create(BuiltInRegistries.ITEM.key(),
+            new ResourceLocation(Main.MODID, "can_lit_blocks"));
+
+    public static final TagKey<Block> CAN_BE_LIT_UP = TagKey.create(BuiltInRegistries.BLOCK.key(),
+            new ResourceLocation(Main.MODID, "can_be_lit_up"));
 }
