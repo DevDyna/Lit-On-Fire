@@ -1,5 +1,6 @@
 package com.devdyna.lit_on_fire;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.core.Direction;
@@ -105,10 +106,10 @@ public class LevelUtil {
         return d[l.random.nextInt(d.length)];
     }
 
-    public static boolean checkBlockPoses(Level l, BlockPos[] p1,Block b){
-        for(BlockPos p2 : p1){
-            if(!l.getBlockState(p2).is(b))
-            return false;
+    public static boolean checkBlockPoses(Level l, BlockPos[] p1, Block... blocks) {
+        for (BlockPos p2 : p1) {
+            if (!Arrays.asList(blocks).contains(l.getBlockState(p2).getBlock()))
+                return false;
         }
         return true;
     }
