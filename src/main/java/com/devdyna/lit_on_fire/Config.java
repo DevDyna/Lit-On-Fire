@@ -51,6 +51,10 @@ public class Config {
             .comment("Enable action bar on invalid placement")
             .define("invalid_actionbar", true);
 
+    public static final ForgeConfigSpec.BooleanValue CAN_LIT_PORTAL = BUILDER
+            .comment("Enable event to lit nether portals")
+            .define("activation_portal", true);
+
     // ---------------------------------------------------------------//
 
     static final ForgeConfigSpec CONFIG_SPEC = BUILDER.build();
