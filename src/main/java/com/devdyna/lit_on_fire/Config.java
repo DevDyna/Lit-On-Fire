@@ -15,6 +15,10 @@ public class Config {
                         .comment("Enable checking waterlog property to lit")
                         .define("check_waterlogging", true);
 
+        public static final ModConfigSpec.BooleanValue REQUIRE_SPACE_TO_LIT_BLOCK = BUILDER
+                        .comment("Enable checking required space to lit")
+                        .define("check_require_space", true);
+
         public static final ModConfigSpec.BooleanValue SWING = BUILDER
                         .comment("Enable item swing animation")
                         .define("swing", true);

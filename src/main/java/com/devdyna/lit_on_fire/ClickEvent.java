@@ -52,7 +52,9 @@ public class ClickEvent {
             if (Config.SWING.get())
                 player.swing(InteractionHand.MAIN_HAND);
 
-            if (LevelUtil.checkBlockPoses(level, checkpos, Blocks.AIR, Blocks.CAVE_AIR, Blocks.VOID_AIR)) {
+            if (Config.REQUIRE_SPACE_TO_LIT_BLOCK.get()
+                    ? LevelUtil.checkBlockPoses(level, checkpos, Blocks.AIR, Blocks.CAVE_AIR, Blocks.VOID_AIR)
+                    : true) {
 
                 if (Config.CHANCE_TO_LIT.get()) {
                     if (LevelUtil.chance(Config.CHANCE_TO_LIT_VALUE.get(), level))
