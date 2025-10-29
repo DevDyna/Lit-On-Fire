@@ -1,6 +1,18 @@
 {
-    "values": [
-        "minecraft:torch",
-        "minecraft:soul_torch"
-    ]
+  "values": [
+    "minecraft:torch",
+    "minecraft:soul_torch",
+    {
+      "id": "#supplementaries:sconces",
+      "required": false
+    },
+    {
+      "id": "nomansland:sconce_torch",
+      "required": false
+    },
+    {
+      "id": "nomansland:soul_sconce_torch",
+      "required": false
+    }
+  ]
 }

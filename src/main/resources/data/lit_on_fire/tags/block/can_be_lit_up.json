@@ -2,6 +2,18 @@
   "values": [
     "#minecraft:campfires",
     "#minecraft:candle_cakes",
-    "#minecraft:candles"
+    "#minecraft:candles",
+    {
+      "id": "northstar:extinguished_lantern",
+      "required": false
+    },
+    {
+      "id": "supplementaries:fire_pit",
+      "required": false
+    },
+    {
+      "id": "#supplementaries:candle_holders",
+      "required": false
+    }
   ]
 }
