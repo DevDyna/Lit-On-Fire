@@ -18,12 +18,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.portal.PortalShape;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 
 public class ClickEvent {
 
     @SubscribeEvent
-    public void TorchclickOnCampfire(PlayerInteractEvent.RightClickBlock event) {
+    public void TorchclickOnCampfire(RightClickBlock event) {
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState state = level.getBlockState(pos);
@@ -32,9 +32,6 @@ public class ClickEvent {
         ItemStack item = event.getItemStack();
         BlockPos[] checkpos = { top, top.north(), top.south(), top.east(), top.west() };
         InteractionHand hand = event.getHand();
-
-        if (level.isClientSide)
-            return;
 
         if (!hand.equals(InteractionHand.MAIN_HAND) || !item.is(Tags.CAN_LIT_BLOCKS))
             return;
@@ -59,13 +56,13 @@ public class ClickEvent {
 
                 if (Config.CHANCE_TO_LIT.get()) {
                     if (LevelUtil.chance(Config.CHANCE_TO_LIT_VALUE.get(), level))
-                        Success(pos, level, state, player, false);
+                        Success(event, false);
                     else if (Config.CHANCE_FAIL.get())
                         level.playLocalSound(pos.getX(), pos.getY(),
                                 pos.getZ(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.AMBIENT, 100,
                                 0.75f, true);
                 } else
-                    Success(pos, level, state, player, false);
+                    Success(event, false);
 
             } else {
 
@@ -79,7 +76,7 @@ public class ClickEvent {
                             true);
 
             }
-            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
             event.setCanceled(true);
 
         }
@@ -94,16 +91,20 @@ public class ClickEvent {
                 if (Config.SWING.get())
                     player.swing(InteractionHand.MAIN_HAND);
 
-                Success(pos, level, state, player, true);
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                Success(event, true);
             }
 
         }
 
     }
 
-    public static void Success(BlockPos pos, Level level, BlockState state, Player player, boolean isPortal) {
+    public static void Success(RightClickBlock event, boolean isPortal) {
+
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState state = level.getBlockState(pos);
+        Player player = event.getEntity();
+
         if (!level.isClientSide)
             if (!isPortal)
                 level.setBlockAndUpdate(pos,
@@ -123,16 +124,20 @@ public class ClickEvent {
             player.displayClientMessage(Component.translatable(Main.langString + "valid"),
                     true);
 
+        event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+        event.setCanceled(true);
+
     }
 
     public static boolean checkPortal(Level level, BlockPos pos, ItemStack item) {
-        for (Direction.Axis axis : Direction.Axis.values()) {
-            Optional<PortalShape> portal = PortalShape.findEmptyPortalShape(level, pos, axis);
-            if (portal.isPresent()) {
-                portal.get().createPortalBlocks();
-                return true;
+        if (!level.isClientSide)
+            for (Direction.Axis axis : Direction.Axis.values()) {
+                Optional<PortalShape> portal = PortalShape.findEmptyPortalShape(level, pos, axis);
+                if (portal.isPresent()) {
+                    portal.get().createPortalBlocks();
+                    return true;
+                }
             }
-        }
         return false;
     }
 
