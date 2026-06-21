@@ -74,11 +74,10 @@ public class ClickEvent {
                             0.75f, true);
 
                 if (Config.INVALID_TIP.get())
-                    player.displayClientMessage(Component.translatable(Main.langString + "invalid"),
-                            true);
+                    player.sendOverlayMessage(Component.translatable(Main.langString + "invalid"));
 
             }
-            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
+            event.setCancellationResult(InteractionResult.SUCCESS_SERVER);
             event.setCanceled(true);
 
         }
@@ -107,13 +106,13 @@ public class ClickEvent {
         BlockState state = level.getBlockState(pos);
         Player player = event.getEntity();
 
-        if (!level.isClientSide)
+        if (!level.isClientSide())
             if (!isPortal)
                 level.setBlockAndUpdate(pos,
                         state.setValue(BlockStateProperties.LIT, true));
 
         if (Config.PARTICLES_ON.get())
-            level.addParticle(ParticleTypes.LAVA, true, pos.getX() + 0.5,
+            level.addParticle(ParticleTypes.LAVA, true,false, pos.getX() + 0.5,
                     pos.getY() + 1.75,
                     pos.getZ() + 0.5, 0, 0, 0);
 
@@ -123,20 +122,19 @@ public class ClickEvent {
                     0.75f, true);
 
         if (Config.ACTIONBAR_ON.get())
-            player.displayClientMessage(Component.translatable(Main.langString + "valid"),
-                    true);
+        player.sendOverlayMessage(Component.translatable(Main.langString + "valid"));
 
-        event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+        event.setCancellationResult(InteractionResult.SUCCESS_SERVER);
         event.setCanceled(true);
 
     }
 
     public static boolean checkPortal(Level level, BlockPos pos, ItemStack item) {
-        if (!level.isClientSide)
+        if (!level.isClientSide())
             for (Direction.Axis axis : Direction.Axis.values()) {
                 Optional<PortalShape> portal = PortalShape.findEmptyPortalShape(level, pos, axis);
                 if (portal.isPresent()) {
-                    portal.get().createPortalBlocks();
+                    portal.get().createPortalBlocks(level);
                     return true;
                 }
             }
